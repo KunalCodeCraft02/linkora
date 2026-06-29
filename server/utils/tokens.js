@@ -13,20 +13,20 @@ export const generateRefreshToken = (userId) => {
 };
 
 export const setTokenCookies = (res, accessToken, refreshToken) => {
-  const isProd = process.env.NODE_ENV === 'production';
+  const isProd = process.env.NODE_ENV === 'production' || process.env.RAILWAY_STATIC_URL;
 
   res.cookie('accessToken', accessToken, {
     httpOnly: true,
-    secure: isProd,
-    sameSite: isProd ? 'none' : 'lax',
+    secure: true,
+    sameSite: 'none',
     maxAge: 15 * 60 * 1000,
     path: '/'
   });
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
-    secure: isProd,
-    sameSite: isProd ? 'none' : 'lax',
+    secure: true,
+    sameSite: 'none',
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/'
   });
